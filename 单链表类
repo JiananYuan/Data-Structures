@@ -16,7 +16,7 @@ protected:
     node<T>* head;
     node<T>* tail;
 public:
-    MyList():n(0) {}  //构造函数, 结点数初始化为0
+    MyList():n(0) {init();}  //构造函数, 结点数初始化为0
     void init() {  //初始化链表
         head = new node<T>;
         head->next = NIL;
@@ -103,13 +103,7 @@ public:
     }
 };
 
-int main()
-{
-    MyList<> v;
-    v.init();
-    
-    return 0;
-}
+
 //*****************************复用代码******************************
 
 
@@ -119,7 +113,6 @@ int main()
 {
     //下面为测试
     MyList<string> v;
-    v.init();
     for(int i=0;i<5;i++) {
         v.push();
         v.Display();
