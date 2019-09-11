@@ -1,0 +1,82 @@
+//*********************顺序表***********************
+template<class T>
+class MyArray{
+protected:
+	T data[10000];
+	int MAXN;
+	int Size;
+public:
+	MyArray(int n=100): Size(n), MAXN(10000){}
+	bool Modify(int pos, T val) {
+		if(pos>=n) return false;
+		data[pos]=val;
+		return true;
+	}
+   bool Insert(int pos,T val) {
+		if(pos>=Size)  return false;
+		for(int i=Size;i>pos;i++) {
+			data[i]=data[i-1];
+		data[pos]=val;
+		return true;
+	}
+	bool Delete(int pos) {
+		if(pos>=Size)  return false;
+      for(int i=pos;i<Size-1;++) {
+			data[i]=data[i+1];
+		return true;
+	}
+	T At(int pos) {
+		if(pos>=Size)  return false;
+		return data[pos];
+	}
+	int Find(T val) {
+		for(int i=0;i<Size;i++) {
+			if(val==data[i])  return i;
+		}
+		return -1;
+	}
+	void Display() {
+		for(int i=0;i<Size;i++)  cout<<data[i]<<" ";
+		cout<<endl;
+	}
+	~MyArray(){}
+}
+//*************************************************
+
+//*************************************************
+int main() {
+	MyArray<int> v;
+	string op;
+	while(cin>>op) {
+		if(op=="modify") {
+			int pos;
+			int x;
+			cin>>pos>>x;
+			if(v.Modify(pos,x))  cout<<"modify successflly"<<endl;
+			else  cout<<"error"<<endl;
+		} else if(op=="insert") {
+			int pos;
+			int x;
+			cin>>pos>>x;
+			if(v.Insert(pos,x))  cout<<"insert successflly"<<endl;
+			else  cout<<"error"<<endl;
+	} else if(op=="delete") {
+			int pos;
+			cin>>pos;
+			if(v.Delete(pos))  cout<<"delete successflly"<<endl;
+			else  cout<<"error"<<endl;
+	} else if(op=="at") {
+			int pos;
+			cin>>pos;
+			cout<<v.At(pos)<<endl;
+		} else if(op=="find") {
+			int key;
+			cin>>key;
+			if(v.Find(key)==-1)  cout<<"not found"<<endl;
+			else  cout<<v.Find(key)<<endl;
+		} 
+}
+v.Display();
+	return 0;
+}
+//*************************************************
