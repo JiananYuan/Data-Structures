@@ -1,1 +1,58 @@
-constructing...
+//************************单向队列***************************
+#include   <iostream>
+using namespace std;
+template<class T>
+class MyQueue {
+protected:
+		const int MAXN=10000;
+		int Size;
+		T data[10000];
+		int head;
+      int tail;
+public:
+		MyQueue (int n=100): Size(n),head(0),tail(0){}
+		void Push(T val) {
+				data[tail]=val;
+				tail++;
+		}
+		bool Pop() {
+				if(head==tail)  return false;
+				head++;
+				return true;
+		}
+		T Top() {
+				if(head==tail)  return false;
+				return data[head];
+		}
+		bool is_Empty() {
+				return head==tail;
+		}
+		void make_Empty() {
+				head=tail=0;
+		}
+		~MyQueue(){}
+}
+//*************************************************
+
+//*****************测试代码*************************
+int main() {
+		MyQueue<string> v;
+		string op;
+		while(cin>>op) {
+				if(op=="push") {
+						string x;
+						cin>>x;
+						v.Push(x);
+				} else if(op=="pop") {
+						if(v.Pop())  cout<<"pop successfully"<<endl;
+						else					 cout<<"error"<<endl;
+				} else if(op=="top") {
+						cout<<v.Top()<<endl;
+				} else if(op==empty?") {
+						cout<<v.is_Empty()?"empty":"not yet"<<endl;
+				}
+		 }
+		v.make_Empty();
+		return 0;
+}
+//*****************************************************
