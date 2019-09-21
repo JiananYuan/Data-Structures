@@ -4,13 +4,12 @@ using namespace std;
 template<class T>
 class MyQueue {
 protected:
-    int MAXN;
-    int Size;
     T data[10000];
     int head;
     int tail;
+    int MAXN;
 public:
-    MyQueue (int n=100): Size(n),head(0),tail(0),MAXN(10000){}
+    MyQueue (): head(0),tail(0),MAXN(10000){}
     void Push(T val) {
         data[tail]=val;
         tail++;
@@ -30,6 +29,7 @@ public:
     void make_Empty() {
         head=tail=0;
     }
+    int Size() {return tail-head;}
     ~MyQueue(){}
 };
 //*************************************************
