@@ -5,11 +5,10 @@ template<class T>
 class MyStack {
 protected:
     int MAXN;
-    int Size;
     int ptr;
     T data[10000];
 public:
-    MyStack(int n=100):ptr(0),Size(n),MAXN(10000){}
+    MyStack():ptr(0),MAXN(10000){}
     bool Push(T val) {
         if(ptr==MAXN)  return false;
         data[ptr]=val;
@@ -34,6 +33,7 @@ public:
     void make_Empty() {
         ptr = 0;
     }
+    int Size(){return ptr;}
     ~MyStack(){}
 };
 //*********************************************************
