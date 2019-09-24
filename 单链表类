@@ -16,8 +16,9 @@ protected:
     node<T>* head;
     node<T>* tail;
 public:
-    MyList():n(0) {init();}  //构造函数, 结点数初始化为0
+    MyList(){init();}  //构造函数, 结点数初始化为0
     void init() {  //初始化链表
+        n = 0;
         head = new node<T>;
         head->next = NIL;
         tail = head;
