@@ -1,35 +1,37 @@
 //************************单向队列***************************
-#include   <iostream>
+#include <iostream>
 using namespace std;
-template<class T>
+template <class T>
 class MyQueue {
 protected:
-    T data[10000];
+    const static int MAX = 1001;
     int head;
     int tail;
-    int MAXN;
+    int Size;
+    T arr[MAX];
 public:
-    MyQueue (): head(0),tail(0),MAXN(10000){}
-    void Push(T val) {
-        data[tail]=val;
-        tail++;
+    MyQueue() {
+        head=tail=0;//the queue is empty
     }
-    bool Pop() {
-        if(head==tail)  return false;
-        head++;
+    bool Push(T val) {
+        if(isFull()) return false;
+        arr[tail]=val;
+        tail = (tail+1)% MAX;
+        Size++;
         return true;
     }
-    T Top() {
-        if(head==tail)  return false;
-        return data[head];
+    bool Pop() {
+        if(isEmpty()) return false;
+        head=(head+1)% MAX;
+        Size--;
+        return true;
     }
-    bool is_Empty() {
-        return head==tail;
+    T Front() {
+        return arr[head];
     }
-    void make_Empty() {
-        head=tail=0;
-    }
-    int Size() {return tail-head;}
+    int getSize() {return Size;}
+    bool isEmpty() {return head==tail;}
+    bool isFull() {return (tail+1)%MAX==head;}
     ~MyQueue(){}
 };
 //*************************************************
@@ -47,13 +49,17 @@ int main() {
             if(v.Pop()) cout<<"pop successfully"<<endl;
             else		cout<<"error"<<endl;
         } else if(op=="top") {
-            cout<<v.Top()<<endl;
+            cout<<v.Front()<<endl;
         } else if(op=="empty?") {
-            if(v.is_Empty())  cout<<"empty"<<endl;
+            if(v.isEmpty())  cout<<"empty"<<endl;
             else  cout<<"not yet"<<endl;
+        } else if(op=="size") {
+            cout<<v.getSize()<<endl;
+        } else if(op=="full?") {
+            if(v.isFull()) cout<<"full"<<endl;
+            else           cout<<"no yet"<<endl;
         }
      }
-    v.make_Empty();
     return 0;
 }
 //*****************************************************
