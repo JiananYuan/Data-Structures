@@ -23,9 +23,7 @@ public:
         head->next = NIL;
         tail = head;
     }
-    void push() {  //相当于push_back()
-        T x;
-        cin>>x;
+    void push(T val) {  //相当于push_back()
         node<T>* p = new node<T>;
         p->data = x;
         p->next = NIL;
@@ -115,7 +113,9 @@ int main()
     //下面为测试
     MyList<string> v;
     for(int i=0;i<5;i++) {
-        v.push();
+        string s;
+        cin >> s;
+        v.push(s);
         v.Display();
     }
     for(int i=0;i<5;i++) {
