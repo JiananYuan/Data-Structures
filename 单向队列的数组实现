@@ -31,7 +31,7 @@ public:
     }
     int getSize() {return Size;}
     bool isEmpty() {return head==tail;}
-    bool isFull() {return (tail+1)%MAX==head;}
+    bool isFull() {return (tail+1) % MAX == head;}
     ~MyQueue(){}
 };
 //*************************************************
