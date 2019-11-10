@@ -1,0 +1,60 @@
+#include <iostream>
+#define MAX 1005
+#define inf 0x7fffffff
+using namespace std;
+int Graph[MAX][MAX];
+
+void initGraph(int n) {
+    for(int i=1;i<=n;i++) {
+        for(int j=1;j<=n;j++) {
+            Graph[i][j] = inf;
+        }
+    }
+}
+
+void buildGraph(int m) {
+    for(int i=1,x,y,c;i<=m;i++) {
+        cin>>x>>y>>c;
+        Graph[x][y] = Graph[y][x] = c;
+    }
+}
+
+int prim(int n) {
+    int dis[MAX],MST[MAX];
+    for(int i=2;i<=n;i++) {
+        dis[i] = Graph[1][i];
+        MST[i] = 1;
+    }
+    MST[1] = 0;
+    int rec = 0;
+    for(int i=2;i<=n;i++) {
+        int minx = inf;
+        int minid = 0;
+        for(int j=2;j<=n;j++) {
+            if(dis[j] < minx && dis[j] != 0) {
+                minx = dis[j];
+                minid = j;
+            }
+        }
+        //cout << "V" << mst[minid] << "-V" << minid << "=" << minx << endl;
+        rec += minx;
+        dis[minid] = 0;
+        for(int j=2;j<=n;j++) {
+            if(Graph[minid][j] < dis[j]) {
+                dis[j] = Graph[minid][j];
+                MST[j] = minid;
+            }
+        }
+    }
+    return rec;
+}
+int main() {
+    int n,m; cin>>n>>m; //n为顶点个数，m为边的个数
+    initGraph(n);
+    buildGraph(m);
+    int cost = prim(n);
+    cout<<cost<<endl;
+    return 0;
+}
+
+//https://blog.csdn.net/yeruby/article/details/38615045
