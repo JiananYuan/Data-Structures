@@ -1,0 +1,50 @@
+#include <iostream>
+#include <stdio.h>
+#include <algorithm>
+#define MAX 10005
+using namespace std;
+struct node {
+    int from,to,dis;
+}edge[MAX];
+int fath[MAX];
+
+bool cmp(const node& a,const node& b) {
+    return a.dis < b.dis;
+}
+
+int father(int x) {
+    while(x != fath[x]) x = fath[x];
+    return x;
+}
+
+void unionn(int x,int y) {
+    fath[ father(x) ] = father(y);
+}
+
+void init(int n,int m) {
+    for(int i=1;i<=m;i++) cin>>edge[i].from>>edge[i].to>>edge[i].dis;
+    for(int i=1;i<=n;i++) fath[i] = i;
+}
+
+int Kruskal(int n,int m) {
+    int cnt = 0, sum = 0;
+    for(int i=1;i<=m;i++) {
+        if(cnt == n-1) break;
+        int a = fath[ edge[i].from ];
+        int b = fath[ edge[i].to ];
+        if(a != b) {
+            unionn(a,b);
+            sum += edge[i].dis;
+            cnt++;
+        }
+    }
+    return sum;
+}
+
+int main() {
+    int n,m; cin>>n>>m;
+    init(n,m);
+    sort(edge+1,edge+1+n,cmp);
+    cout<<Kruskal(n,m)<<endl;
+    return 0;
+}
