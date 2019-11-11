@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #define MAX 5005
 #define inf 0x7fffffff
 #define ERROR -1
@@ -14,34 +15,36 @@ void initGraph(int n) {
 }
 
 void buildGraph(int m) {
-    for(int i=1,x,y,c;i<=m;i++) {
+    int x,y,c;
+    while(m--) {
         cin>>x>>y>>c;
-        Graph[x][y] = Graph[y][x] = c;
+        Graph[x][y] = Graph[y][x] = min(c,Graph[x][y]);
     }
 }
 
 int prim(int n) {
     int dis[MAX],MST[MAX];
     MST[1] = 0;
+    dis[1] = 0;
     for(int i=2;i<=n;i++) {
-        dis[i] = Graph[1][i];  //初始化每个点到现有树的距离
-        MST[i] = 1;            //让每个节点的父结点初始化为第一个结点
+        dis[i] = Graph[1][i];
+        MST[i] = 1;
     }
     int sum = 0;
     for(int i=2;i<=n;i++) {
         int minx = inf;
         int id = 0;
-        for(int j=2;j<=n;j++) {
+        for(int j=1;j<=n;j++) {
             if(dis[j] != 0 && dis[j] < minx) {
                 minx = dis[j];
                 id = j;
             }
         }
         if(id == 0) return ERROR;
-        //cout << "V" << mst[minid] << "-V" << minid << "=" << minx << endl;
+        cout << "V" << MST[id] << "-V" << id << "=" << minx << endl;
         sum += minx;
         dis[id] = 0;
-        for(int j=2;j<=n;j++) {
+        for(int j=1;j<=n;j++) {
             if(Graph[id][j] < dis[j]) {
                 dis[j] = Graph[id][j];
                 MST[j] = id;
@@ -52,11 +55,10 @@ int prim(int n) {
 }
 
 int main() {
-    int n,m; cin>>n>>m; //n为顶点个数，m为边的个数
+    int n,m; cin>>n>>m;
     initGraph(n);
     buildGraph(m);
     int cost = prim(n);
-    if(cost == -1) cout<<"orz"<<endl;
-    else           cout<<cost<<endl;
+    cout<<cost<<endl;
     return 0;
 }
