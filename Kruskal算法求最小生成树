@@ -1,50 +1,53 @@
 #include <iostream>
-#include <stdio.h>
 #include <algorithm>
-#define MAX 10005
+#include <stdio.h>
+#define MAX 100005
+#define N 1005
+#define ERROR -1
 using namespace std;
 struct node {
     int from,to,dis;
 }edge[MAX];
-int fath[MAX];
-
 bool cmp(const node& a,const node& b) {
     return a.dis < b.dis;
 }
-
-int father(int x) {
-    while(x != fath[x]) x = fath[x];
+int father[N];
+void init(int n) {
+    for(int i=1;i<=n;i++) father[i] = i;
+}
+int findFather(int x) {
+    while(x != father[x]) x = father[x];
     return x;
 }
-
 void unionn(int x,int y) {
-    fath[ father(x) ] = father(y);
+    int a = findFather(x);
+    int b = findFather(y);
+    if(a!=b) father[b] = a;
 }
-
-void init(int n,int m) {
-    for(int i=1;i<=m;i++) cin>>edge[i].from>>edge[i].to>>edge[i].dis;
-    for(int i=1;i<=n;i++) fath[i] = i;
-}
-
-int Kruskal(int n,int m) {
-    int cnt = 0, sum = 0;
+int kruskal(int n,int m) {
+    int cnt = 0,sum = -1e9;
     for(int i=1;i<=m;i++) {
         if(cnt == n-1) break;
-        int a = fath[ edge[i].from ];
-        int b = fath[ edge[i].to ];
-        if(a != b) {
-            unionn(a,b);
-            sum += edge[i].dis;
+        int a = findFather(edge[i].from);
+        int b = findFather(edge[i].to);
+        if(a!=b) {
+            unionn(edge[i].from,edge[i].to);
+            sum += edge[i].dis);
             cnt++;
         }
     }
+    if(cnt != n-1) return ERROR;
     return sum;
 }
 
 int main() {
     int n,m; cin>>n>>m;
-    init(n,m);
-    sort(edge+1,edge+1+n,cmp);
-    cout<<Kruskal(n,m)<<endl;
+    init(n);
+    for(int i=1;i<=m;i++) {
+        scanf("%d%d%d",&edge[i].from,&edge[i].to,&edge[i].dis);
+    }
+    sort(edge+1,edge+1+m,cmp);
+    int ans = kruskal(n,m);
+    cout<<ans<<endl;
     return 0;
 }
