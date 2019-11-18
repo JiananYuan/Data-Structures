@@ -5,7 +5,6 @@
 #define MAX 1005
 #define ptr vector<int>::iterator
 using namespace std;
-int mp[MAX][MAX];
 
 int main() {
     int n,m; //n: number of vertex, m: number of edge
