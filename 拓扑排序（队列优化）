@@ -1,0 +1,54 @@
+#include <iostream>
+#include <stdio.h>
+#include <queue>
+#include <algorithm>
+#define MAX 1005
+#define ptr vector<int>::iterator
+using namespace std;
+int mp[MAX][MAX];
+
+int main() {
+    int n,m; //n: number of vertex, m: number of edge
+    cin>>n>>m;
+    vector<int> edge[MAX];
+    while(m--) {
+        int from,to; scanf("%d%d",&from,&to);
+        edge[from].push_back(to);
+    }
+    int yy;
+    cin>>yy>>yy;
+    int ind[MAX];
+    for(int i=1;i<=n;i++) {
+        int k = 0;
+        for(int j=1;j<=n;j++) {
+            ptr pos = find(edge[j].begin(),edge[j].end(),i);
+            if(pos != edge[j].end()) k++;
+        }
+        ind[i] = k;
+    }
+    queue<int> q;
+    for(int i=1;i<=n;i++) {
+        if(ind[i] == 0) q.push(i);
+    }
+    vector<int> ans;
+    while(!q.empty()) {
+        int p = q.front(); q.pop();
+        ans.push_back(p);
+        for(int i=0;i<edge[p].size();i++) {
+            int tmp = edge[p][i];
+            ind[tmp]--;
+            if(ind[tmp] == 0) q.push(tmp);
+        }
+    }
+    if(ans.size() == n) {
+        printf("%d",ans[0]);
+        for(int i=1;i<n;i++) {
+            printf(" %d",ans[i]);
+        }
+        printf("\n");
+    }
+    else {
+        cout<<"ERROR"<<endl;
+    }
+    return 0;
+}
