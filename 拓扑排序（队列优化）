@@ -15,8 +15,6 @@ int main() {
         int from,to; scanf("%d%d",&from,&to);
         edge[from].push_back(to);
     }
-    int yy;
-    cin>>yy>>yy;
     int ind[MAX];
     for(int i=1;i<=n;i++) {
         int k = 0;
