@@ -85,10 +85,10 @@ void FindKeyPath(Graph& G) {
             p = p->nxt;
         }
     }
-//    for(int i=1;i<=G.n;i++) {
-//        if(ve[i] == vl[i]) cout<<i<<" ";
-//    }
-//    cout<<endl;
+    for(int i=1;i<=G.n;i++) {
+        if(ve[i] == vl[i]) cout<<i<<" ";
+    }
+    cout<<endl;
 }
 
 int main() {
