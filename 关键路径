@@ -1,3 +1,4 @@
+//下标从1开始
 #include <iostream>
 #include <stdio.h>
 #include <queue>
@@ -25,10 +26,10 @@ int ve[MAX],vl[MAX];
 Graph CreateAOE(int n,int m){  //create AdjList
     Graph G(n,m);
     G.List = new Listhead[G.n+1];
-    for(int i=1;i<=G.n;i++) (G.List+i)->nxt = NULL;
+    for(int i=1;i<=G.n;i++) (G.List+i)->nxt = NIL;
     for(int i=1;i<=G.m;i++) {
         int v,u,c;
-        scanf("%d%d%d",&v,&u,&c); v++; u++;//就题意来说
+        scanf("%d%d%d",&v,&u,&c);
         edge *p = (G.List + v);
         while(p -> nxt) p = p -> nxt;
         p -> nxt = new edge(u,c,NIL);
