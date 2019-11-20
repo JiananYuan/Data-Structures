@@ -1,0 +1,102 @@
+#include <iostream>
+#include <stdio.h>
+#include <queue>
+#include <stack>
+#include <algorithm>
+#define NIL NULL
+#define MAX 1005
+using namespace std;
+struct edge {
+    int to;
+    int val;
+    edge *nxt;
+    edge(int a = 0,int b = 0,edge* c = NIL):to(a),val(b),nxt(c){}
+};
+typedef edge Listhead,*AdjList; //边、链头、列表
+
+struct Graph{
+    int n,m;  //n: number of vertex; m: number of edge
+    AdjList List;
+    Graph(int _n,int _m):n(_n),m(_m){}
+};
+
+int ve[MAX],vl[MAX];
+
+Graph CreateAOE(int n,int m){  //create AdjList
+    Graph G(n,m);
+    G.List = new Listhead[G.n+1];
+    for(int i=1;i<=G.n;i++) (G.List+i)->nxt = NULL;
+    for(int i=1;i<=G.m;i++) {
+        int v,u,c;
+        scanf("%d%d%d",&v,&u,&c); v++; u++;//就题意来说
+        edge *p = (G.List + v);
+        while(p -> nxt) p = p -> nxt;
+        p -> nxt = new edge(u,c,NIL);
+    }
+    return G;
+}
+
+void Tsort(Graph& G,stack<int>& s) { //拓扑排序
+    int ind[MAX] = {0};
+    for(int i=1;i<=G.n;i++) {
+        edge *p = (G.List+i)->nxt;
+        while(p) {
+            ind[ p -> to ]++;
+            p = p -> nxt;
+        }
+    } //initialize the ind[] array
+    queue<int> q;
+    for(int i=1;i<=G.n;i++) {
+        if(ind[i]==0) {
+            q.push(i); ind[i] = -1;
+        }
+    }  //initialize the queue
+    while(!q.empty()) {
+        int pos = q.front(); q.pop();
+        s.push(pos);
+        edge *p = (G.List+pos)->nxt;
+        while(p) {
+            ind[ p -> to ]--;
+            ve[p->to] = max(ve[p->to],ve[pos] + p -> val);
+            p = p -> nxt;
+        }
+        for(int i=1;i<=G.n;i++) {  //update ind[] array and the queue
+            if(ind[i]==0) {
+                q.push(i);
+                ind[i] = -1;
+            }
+        }
+    }
+}
+
+void FindKeyPath(Graph& G) {
+    stack<int> s;
+    Tsort(G,s);
+    for(int i = 1; i <=G.n; i++) {
+        vl[i] = ve[s.top()];
+    }  //initialize the vl[] array
+    while(!s.empty()) {
+        int id = s.top(); s.pop();
+        edge *p = (G.List + id)->nxt;
+        while(p) {
+            if(vl[id] + p->val > vl[p->to]) {
+                vl[id] =  vl[p->to] - p->val;
+            }
+            p = p->nxt;
+        }
+    }
+//    for(int i=1;i<=G.n;i++) {
+//        if(ve[i] == vl[i]) cout<<i<<" ";
+//    }
+//    cout<<endl;
+}
+
+int main() {
+    int n,m; cin>>n>>m;
+    Graph G = CreateAOE(n,m);
+    FindKeyPath(G);
+    for(int i=1;i<=G.n;i++) cout<<ve[i]<<" ";
+    cout<<endl;
+    for(int i=1;i<=G.n;i++) cout<<vl[i]<<" ";
+    return 0;
+}
