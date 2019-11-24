@@ -6,6 +6,7 @@ struct node {
     T element;
     node* left;
     node* right;
+    node(T e,node* l,node* r):element(e),left(l),right(r){}
 };
 
 template <class T>
@@ -50,10 +51,7 @@ public:
 
     void inside_Insert(int val,node<T>*& p) {
         if(p==NULL) {
-            p = new node<T>;
-            p->element = val;
-            p->left = NULL;
-            p->right = NULL;
+            p = new node<T>(val,NULL,NULL);
         }
         else if(val < p->element) inside_Insert(val,p->left);
         else if(val > p->element) inside_Insert(val,p->right);
@@ -161,4 +159,3 @@ int main()
     }
     return 0;
 }
-//************************************************************************
