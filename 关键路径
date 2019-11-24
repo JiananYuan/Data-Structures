@@ -1,4 +1,3 @@
-//下标从1开始
 #include <iostream>
 #include <stdio.h>
 #include <queue>
@@ -29,7 +28,7 @@ Graph CreateAOE(int n,int m){  //create AdjList
     for(int i=1;i<=G.n;i++) (G.List+i)->nxt = NIL;
     for(int i=1;i<=G.m;i++) {
         int v,u,c;
-        scanf("%d%d%d",&v,&u,&c);
+        scanf("%d%d%d",&v,&u,&c); v++; u++;//就题意来说
         edge *p = (G.List + v);
         while(p -> nxt) p = p -> nxt;
         p -> nxt = new edge(u,c,NIL);
@@ -37,7 +36,7 @@ Graph CreateAOE(int n,int m){  //create AdjList
     return G;
 }
 
-void Tsort(Graph& G,stack<int>& s) { //拓扑排序
+void Tsort(Graph& G) { //拓扑排序
     int ind[MAX] = {0};
     for(int i=1;i<=G.n;i++) {
         edge *p = (G.List+i)->nxt;
@@ -52,6 +51,7 @@ void Tsort(Graph& G,stack<int>& s) { //拓扑排序
             q.push(i); ind[i] = -1;
         }
     }  //initialize the queue
+    stack<int> s;
     while(!q.empty()) {
         int pos = q.front(); q.pop();
         s.push(pos);
@@ -68,11 +68,6 @@ void Tsort(Graph& G,stack<int>& s) { //拓扑排序
             }
         }
     }
-}
-
-void FindKeyPath(Graph& G) {
-    stack<int> s;
-    Tsort(G,s);
     for(int i = 1; i <=G.n; i++) {
         vl[i] = ve[s.top()];
     }  //initialize the vl[] array
@@ -86,6 +81,10 @@ void FindKeyPath(Graph& G) {
             p = p->nxt;
         }
     }
+}
+
+void FindKeyPath(Graph& G) {
+    Tsort(G);
     for(int i=1;i<=G.n;i++) {
         if(ve[i] == vl[i]) cout<<i<<" ";
     }
