@@ -7,7 +7,6 @@
 #define N 200
 using namespace std;
 typedef int Element;
-typedef Element Bintree;
 
 
 //顺序查找----------------------------------------
