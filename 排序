@@ -8,11 +8,11 @@ typedef int Element;
 //简单选择排序，下标从1开始
 void SimpleSelectSort(Element a[],int n) {
     for(int i=1;i<=n-1;i++) {
-        int minid = i;
+        int k = i;
         for(int j=i+1;j<=n;j++) {
-            if(a[j] < a[minid]) minid = j;
+            if(a[j] < a[k]) k = j;
         }
-        if(minid != i) swap(a[minid],a[i]);
+        if(k != i) swap(a[k],a[i]);
     }
 }
 
@@ -21,7 +21,8 @@ void SimpleInsertSort(Element a[],int n) {
     for(int i=1;i<=n;i++) {
         Element tmp = a[i];
         int j = i;
-        for(;j > 1 && a[j-1] > tmp;j--) a[j] = a[j-1];
+        for(;j > 1 && a[j-1] > tmp;j--)
+            a[j] = a[j-1];
         a[j] = tmp;
     }
 }
@@ -55,10 +56,10 @@ void BubbleSort(Element a[],int n) {
     }
 }
 
-//快速排序，下标从1开始
-void QuickSort(Element a[],int leftBorder,int rightBorder) {
-    if(leftBorder >= rightBorder) return;
-    int i = leftBorder, j = rightBorder, mid = (leftBorder + rightBorder)/2;
+//快速排序，下标从1开始 band 1
+void QuickSort(Element a[],int left,int right) {
+    if(left >= right) return;
+    int i = left, j = right, mid = (left + right)/2;
     Element tmp = a[mid];
     while(i < j) {
         while(j > i  && a[j] >= tmp) j--;
@@ -66,8 +67,23 @@ void QuickSort(Element a[],int leftBorder,int rightBorder) {
         if(i < j) swap(a[i],a[j]);
     }
     swap(a[j],a[mid]);
-    QuickSort(a,leftBorder,i-1);
-    QuickSort(a,i+1,rightBorder);
+    QuickSort(a,left,i-1);
+    QuickSort(a,i+1,right);
+}
+
+//QuickSort  band 2
+void QuickSort2(Element a[],int left,int right) {
+    if(left >= right) return ;
+    int l = left + 1, r = right;
+    while(true) {
+        while(a[l] <= a[left] && l < right) l++;
+        while(a[r] >= a[left] && r > left)  r--;
+        if(l < r) swap(a[l],a[r]);
+        else      break;
+    }
+    swap(a[left],a[r]);
+    QuickSort2(a,left,r-1);
+    QuickSort2(a,r+1,right);
 }
 
 //堆排序,下标从0开始
@@ -76,13 +92,9 @@ void PercDown(Element a[],int p,int n) {
     int parent = 0,child = 0;
     for(parent = p; parent*2 + 1 < n; parent = child) {
         child = parent * 2 + 1;
-        if((child!=n-1) && (a[child] < a[child+1])) {
-            child++;
-        }
+        if((child!=n-1) && (a[child] < a[child+1]))  child++;
         if(x >= a[child]) break;
-        else {
-            a[parent] = a[child];
-        }
+        else  a[parent] = a[child];
     }
     a[parent] = x;
 }
@@ -153,24 +165,8 @@ void MergeSort(int a[],int l,int r) {
     for(int i=l;i<=r;i++) a[i] = tmp[i];
 }
 
-
-
-//测试函数
-void test() {
-    int a[10] = {5,23,45,63,1,7,199,32,88,45};
-    //int n; cin>>n;
-    //int a[MAX];
-    //for(int i=1;i<=n;i++) cin>>a[i];//scanf("%d",&a[i]);
-    ShellSort(a,10);
-    //printf("%d",a[1]);
-    for(int i=0;i<10;i++) {
-        printf(" %d",a[i]);
-    }
-    cout<<endl;
-}
-
 int main() {
-    test();
+    int a[11] = {0,5,23,45,63,1,7,199,32,88,45};
+    for(int i=1;i<=10;i++)  printf(" %d",a[i]);
     return 0;
 }
-
