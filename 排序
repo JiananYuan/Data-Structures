@@ -1,189 +1,169 @@
 #include <iostream>
-#include <stdio.h>
-#include <queue>
-#include <cstring>
-#define MAX 100005
+#include <stdlib.h>
+#include <time.h>
 using namespace std;
 typedef int Element;
-//简单选择排序，下标从1开始
-void SimpleSelectSort(Element a[],int n) {
+
+bool judge(Element a[],int n) {
     for(int i=1;i<=n-1;i++) {
-        int k = i;
-        for(int j=i+1;j<=n;j++) {
-            if(a[j] < a[k]) k = j;
-        }
-        if(k != i) swap(a[k],a[i]);
+        if(a[i]>a[i+1]) return false;
     }
+    return true;
 }
 
-//简单插入排序，下标从1开始
-void SimpleInsertSort(Element a[],int n) {
-    for(int i=1;i<=n;i++) {
-        Element tmp = a[i];
-        int j = i;
-        for(;j > 1 && a[j-1] > tmp;j--)
-            a[j] = a[j-1];
-        a[j] = tmp;
-    }
-}
-
-//希尔排序，下标从0开始
-void ShellSort(Element a[],int n) {
-    int Sedgewick[] = {929,505,209,109,41,19,5,1,0};
-    int Si = 0;
-    while(Sedgewick[Si]>=n) Si++;
-    for(int d = Sedgewick[Si];d>0;d = Sedgewick[++Si]) {
-        for(int i = d;i<n;i++) {
-            int tmp = a[i];
-            int j = 0;
-            for(j = i;j>=d && a[j-d]>tmp;j-=d) a[j] = a[j-d];
-            a[j] = tmp;
-        }
+//直接插入排序，下标从1开始
+void InsertSort(Element a[],int n) {
+    for(int i=2;i<=n;i++) {
+        int pos=0,tmp = a[i];
+        for(pos=i-1;pos>=1 && tmp<a[pos];pos--)
+            a[pos+1] = a[pos];
+        a[pos+1] = tmp;
     }
 }
 
 //冒泡排序，下标从1开始
 void BubbleSort(Element a[],int n) {
-    for(int i=1;i<=n-1;i++) {
+    for(int i=1;i<=n;i++) {
         int tag = 0;
         for(int j=1;j<=n-i;j++) {
-            if(a[j] > a[j+1]) {
+            if(a[j]>a[j+1]) {
                 swap(a[j],a[j+1]);
                 tag = 1;
             }
         }
-        if(tag == 0) break;
+        if(!tag) break;
     }
 }
 
-//快速排序，下标从1开始 band 1
-void QuickSort(Element a[],int left,int right) {
-    if(left >= right) return;
-    int i = left, j = right, mid = (left + right)/2;
-    Element tmp = a[mid];
-    while(i < j) {
-        while(j > i  && a[j] >= tmp) j--;
-        while(i < j && a[i] <= tmp)  i++;
-        if(i < j) swap(a[i],a[j]);
-    }
-    swap(a[j],a[mid]);
-    QuickSort(a,left,i-1);
-    QuickSort(a,i+1,right);
-}
-
-//QuickSort  band 2
-void QuickSort2(Element a[],int left,int right) {
-    if(left >= right) return ;
-    int l = left + 1, r = right;
-    while(true) {
-        while(a[l] <= a[left] && l < right) l++;
-        while(a[r] >= a[left] && r > left)  r--;
-        if(l < r) swap(a[l],a[r]);
-        else      break;
-    }
-    swap(a[left],a[r]);
-    QuickSort2(a,left,r-1);
-    QuickSort2(a,r+1,right);
-}
-
-//QuickSort band 3
-void QuickSort3(Element a[],int left,int right) {
-    if(left >= right) return ;
-    int standard = a[left];
-    int l = left, r = right;
-    while(l < r) {
-        while(a[r] >= standard && r > l)  r--;
-        swap(a[r],a[l]);
-        while(a[l] <= standard && l < r) l++;
-        swap(a[r],a[l]);
-    }
-    a[l] = standard;
-    QuickSort3(a,left,l-1);
-    QuickSort3(a,l+1,right);
-}
-
-//堆排序,下标从0开始
-void PercDown(Element a[],int p,int n) {
-    Element x = a[p];
-    int parent = 0,child = 0;
-    for(parent = p; parent*2 + 1 < n; parent = child) {
-        child = parent * 2 + 1;
-        if((child!=n-1) && (a[child] < a[child+1]))  child++;
-        if(x >= a[child]) break;
-        else  a[parent] = a[child];
-    }
-    a[parent] = x;
-}
-
-void HeapSort(Element a[],int n) {
-    for(int i = n/2-1;i>=0;i--) PercDown(a,i,n);
-    for(int i=n-1;i>0;i--) {
-        swap(a[0],a[i]);
-        PercDown(a,0,i);
-    }
-}
-
-//基数排序
-int maxBits(int a[],int n) {
-    int maxn = 0;
-    for(int i = 0;i<n;i++) {
-        int tmp = a[i];
-        int cnt = 0;
-        while(tmp) {
-            tmp /= 10;
-            cnt++;
+//希尔排序，下标从1开始
+void ShellSort(Element a[],int n) {
+    for(int d=n/2;d>=1;d/=2) {
+        for(int i=d+1;i<=n;i++) {
+            int tmp = a[i],pos = 0;
+            for(pos = i-d;pos >= d && a[pos] > tmp;pos-=d)
+                a[pos+d] = a[pos];
+            a[pos+d] = tmp;
         }
-        maxn = max(maxn,cnt);
     }
-    return maxn;
 }
 
-void BaseSort(int a[],int n) {
+//快速排序，下标从1开始
+void core(Element a[],int l,int r) {
+    if(l >= r) return ;
+    int pos = l + rand()%(r-l+1);
+    int tmp = a[pos];
+    int i = l, j = r;
+    while(i < j) {
+        while(a[j] >= tmp && i < j && j > pos) j--;
+        swap(a[i],a[j]);
+        while(a[i] <= tmp && i < j && i < pos) i++;
+        swap(a[i],a[j]);
+    }
+    core(a,l,i-1);
+    core(a,i+1,r);
+}
+void QuickSort(Element a[],int n) {
+    core(a,1,n);
+}
+
+//基数排序，下标从1开始
+#include <deque>
+#include <algorithm>
+int maxBits(Element a[],int n) {
+    int b[16];
+    for(int i=1;i<=n;i++) b[i] = a[i];
+    int maxx = INT_MIN;
+    for(int i=1;i<=n;i++) {
+        int cnt = 0;
+        while(b[i]) {
+            cnt++;
+            b[i] /= 10;
+        }
+        maxx = max(cnt,maxx);
+    }
+    return maxx;
+}
+void BaseSort(Element a[],int n) {
     int m = maxBits(a,n);
-    int b[n];
-    memcpy(b,a,sizeof(a));
-    queue<int> q[10];
+    deque<int> q[10];
+    int b[16];
+    for(int i=1;i<=n;i++) b[i] = a[i];
     int base = 10;
     while(m--) {
-        for(int i=0;i<n;i++) {
-            q[ b[i]%10 ].push(a[i]);
-        }
-        int u = 0;
+        for(int i=1;i<=n;i++)  q[ b[i]%10 ].push_back(a[i]);
+        int u = 1;
         for(int i=0;i<10;i++) {
             while(!q[i].empty()) {
                 a[u++] = q[i].front();
-                q[i].pop();
+                q[i].pop_front();
             }
         }
-        for(int i=0;i<n;i++) {
-            b[i] = a[i]/base;
-        }
+        for(int i=1;i<=n;i++) b[i] = a[i]/base;
         base *= 10;
     }
 }
 
-//归并排序
-void MergeSort(int a[],int l,int r) {
-    if(r == l) return ;
-    int mid = l+((r-l)>>1);
-    MergeSort(a,l,mid);
-    MergeSort(a,mid+1,r);
-    int ptr = l, qtr = mid+1, u=l;
-    int tmp[1001];
-    while(ptr!=mid+1&&qtr!=r+1) {
-        if(a[ptr]>a[qtr])
-            tmp[u++] = a[qtr++];
-        else
-            tmp[u++] = a[ptr++];
+//归并排序，下标从1开始
+void MergeCore(Element a[],int l,int r) {
+    if(l >= r) return ;
+    int mid = (l+r)/2;
+    MergeCore(a,l,mid);
+    MergeCore(a,mid+1,r);
+    int u = l;
+    int tmp[105];
+    int i =l, j = mid+1;
+    while(i!=mid+1 && j!=r+1) {
+        if(a[i]>a[j])         tmp[u++] = a[j++];
+        else                  tmp[u++] = a[i++];
     }
-    while(qtr!=r+1)   tmp[u++] = a[qtr++];
-    while(ptr!=mid+1) tmp[u++] = a[ptr++];
-    for(int i=l;i<=r;i++) a[i] = tmp[i];
+    while(i!=mid+1) tmp[u++] = a[i++];
+    while(j!=r+1)   tmp[u++] = a[j++];
+    for(int k=l;k<=r;k++) a[k] = tmp[k];
+}
+void MergeSort(Element a[],int n) {
+    MergeCore(a,1,n);
+}
+
+//堆排序，下标从0开始
+void Percdown() {
+
+}
+void HeapSort(Element a[],int n) {
+
+}
+
+
+void print(Element a[],int n) {
+    for(int i=1;i<=n;i++) cout<<a[i]<<" ";
+}
+
+void test(Element a[],int n) {
+    int t = 10;
+    bool tag = true;
+    while(t--) {
+        for(int i=1;i<=15;i++) a[i] = rand() % 101;
+        //InsertSort(a,n);
+        //BubbleSort(a,n);
+        //ShellSort(a,n);
+        //QuickSort(a,n);
+        //BaseSort(a,n);
+        //MergeSort(a,n);
+        HeapSort(a,n);
+        print(a,n);
+        if(judge(a,n)) cout<<"Yes"<<endl;
+        else {
+            cout<<"No!!!"<<endl;
+            tag = false;
+            break;
+        }
+    }
+    if(tag) cout<<"Yes"<<endl;
+    else    cout<<"No!"<<endl;
 }
 
 int main() {
-    int a[11] = {0,5,23,45,63,1,7,199,32,88,45};
-    QuickSort3(a,1,10);
-    for(int i=1;i<=10;i++)  printf(" %d",a[i]);
+    srand((unsigned)time(NULL));
+    Element a[16];
+    test(a,15);
     return 0;
 }
