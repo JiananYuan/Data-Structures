@@ -47,23 +47,23 @@ void ShellSort(Element a[],int n) {
     }
 }
 
-//快速排序，下标从1开始
-void core(Element a[],int l,int r) {
+//随机快速排序，下标从1开始
+void QuickCore(Element a[],int l,int r) {
     if(l >= r) return ;
-    int pos = l + rand()%(r-l+1);
-    int tmp = a[pos];
-    int i = l, j = r;
+    int pos = l + rand()%(r-l);
+    swap(a[pos],a[l]);
+    int i = l, j = r,tmp = a[l];
     while(i < j) {
-        while(a[j] >= tmp && i < j && j > pos) j--;
+        while(a[j] >= tmp && i < j) j--;
         swap(a[i],a[j]);
-        while(a[i] <= tmp && i < j && i < pos) i++;
+        while(a[i] <= tmp && i < j) i++;
         swap(a[i],a[j]);
     }
-    core(a,l,i-1);
-    core(a,i+1,r);
+    QuickCore(a,l,i-1);
+    QuickCore(a,i+1,r);
 }
 void QuickSort(Element a[],int n) {
-    core(a,1,n);
+    QuickCore(a,1,n);
 }
 
 //基数排序，下标从1开始
