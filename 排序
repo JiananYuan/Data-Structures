@@ -37,12 +37,14 @@ void BubbleSort(Element a[],int n) {
 
 //希尔排序，下标从1开始
 void ShellSort(Element a[],int n) {
-    for(int d=n/2;d>=1;d/=2) {
-        for(int i=d+1;i<=n;i++) {
-            int tmp = a[i],pos = 0;
-            for(pos = i-d;pos >= d && a[pos] > tmp;pos-=d)
-                a[pos+d] = a[pos];
-            a[pos+d] = tmp;
+    int  m = n;
+    while(m!=1) {
+        m /= 2;
+        for(int i=m;i<=n;i++) {
+            int tmp = a[i];
+            int j;
+            for(j=i;j>m && a[j-m] > tmp;j-=m) a[j] = a[j-m];
+            a[j] = tmp;
         }
     }
 }
