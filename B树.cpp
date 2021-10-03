@@ -55,7 +55,7 @@ int Search(BTree p, int k) {
     int i = 1;
     int keynum = p -> keynum;
     while (i <= keynum && p -> key[i] < k) {
-        ++i;
+        i += 1;
     }
     return i;
 }
@@ -131,7 +131,7 @@ void split(BTree& q, int s, BTree& ap) {
     }
     ap -> keynum = n - s;
     ap -> parent = q -> parent;
-    for (i = 0; i <= n - s; ++i) {
+    for (i = 0; i <= n - s; i += 1) {
         if (ap -> ptr[i] != nullptr) {
             ap -> ptr[i] -> parent = ap;
         }
@@ -255,7 +255,7 @@ void Restore(BTree& p, int i, BTree& T) {
         // borrow one key from left node
         if (r > 0 && lc != nullptr && (lc -> keynum > (m-1)/2)) {
             p -> keynum = p -> keynum + 1;
-            for (j = p -> keynum; j > 1; --j) {
+            for (j = p -> keynum; j > 1; j -= 1) {
                 p -> key[j] = p -> key[j-1];
                 p -> ptr[j] = p -> ptr[j-1];
             }
@@ -290,7 +290,7 @@ void Restore(BTree& p, int i, BTree& T) {
         }
         r = 0;
         while (ap -> ptr[r] != p) {
-            ++r;
+            r += 1;
         }
         // combine with left brother
         if (r > 0 && (ap -> ptr[r-1] -> keynum <= (m-1)/2)) {
@@ -303,7 +303,7 @@ void Restore(BTree& p, int i, BTree& T) {
             p -> key[1] = ap -> key[r];
             p -> ptr[1] = p -> ptr[0];
             ap -> ptr[r] = lc;
-            for (j = 1; j <= lc -> keynum + p -> keynum; ++j) {
+            for (j = 1; j <= lc -> keynum + p -> keynum; j += 1) {
                 lc -> key[lc -> keynum + j] = p -> key[j];
                 lc -> ptr[lc -> keynum + j] = p -> ptr[j];
             }
@@ -315,7 +315,7 @@ void Restore(BTree& p, int i, BTree& T) {
                 }
             }
             lc -> keynum = lc -> keynum + p -> keynum;
-            for (j = r; j < ap -> keynum; ++j) {
+            for (j = r; j < ap -> keynum; j += 1) {
                 ap -> key[j] = ap -> key[j+1];
                 ap -> ptr[j] = ap -> ptr[j+1];
             }
@@ -392,21 +392,21 @@ void Successor(BTree& p, int i) {
  * delete an element from a b_tree
  * @param p target node
  * @param i target index
- * @param T BTree 
+ * @param T BTree
  */
 void DeleteBTree(BTree& p, int i, BTree& T) {
     // use the successor to replace it
     if (p -> ptr[i] != nullptr) {
         // notice that p will change to the successor node after calling this function
         Successor(p, i);
-        // delete the successor
+        // delete the successor recursively
         DeleteBTree(p, 1, T);
     }
-    // 
+    // no successor
     else {
-        // remove i-th value directly, then tune possibly
+        // first remove i-th value directly
         Remove(p, i);
-        // not enough to (m-1)/2, need to restore b_tree
+        // not enough to (m-1)/2, then need to restore b_tree
         if (p -> keynum < (m-1)/2) {
             Restore(p, i, T);
         }
@@ -476,7 +476,7 @@ void create_btree() {
 
 // api: insert
 void insert_key_type() {
-    cout << "Enter an element to insert" << endl;
+    cout << "Enter an element to insert: ";
     key_type tmp;
     cin >> tmp;
     result p;
@@ -497,7 +497,7 @@ void insert_key_type() {
 
 // api: search element
 void find_key_type() {
-    cout << "Enter an element to find" << endl;
+    cout << "Enter an element to find: " << endl;
     key_type tmp;
     cin >> tmp;
     result p;
@@ -512,14 +512,14 @@ void find_key_type() {
 
 // api: delete element
 void delete_key_type() {
-    cout << "Enter an element to be deleted" << endl;
+    cout << "Enter an element to be deleted: " << endl;
     key_type tmp;
     cin >> tmp;
     result p;
     SearchBTree(T, tmp, p);
     if (p.tag) {
         DeleteBTree(p.pt, p.i, T);
-        cout << "Delete successfully!" << endl;
+        cout << "Delete successfully" << endl;
         show_btree(T);
         cout << endl;
     }
