@@ -577,3 +577,348 @@ int main()
 
     return 0;
 }
+
+/***** output: exist bug!!
+C:\Users\Jiananyuan\CLionProjects\b_tree\cmake-build-debug\b_tree.exe
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+2
+Enter an element to insert:39
+ Insert successfully
+[39]
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+2
+Enter an element to insert:22
+ Insert successfully
+[22 39]
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+2
+Enter an element to insert:97
+ Insert successfully
+[22 39 97]
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+2
+Enter an element to insert:41
+ Insert successfully
+[22 39 41 97]
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+2
+Enter an element to insert:53
+ Insert successfully
+[41]<[22 39],[53 97]>
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+2 
+Enter an element to insert:13
+ Insert successfully
+[41]<[13 22 39],[53 97]>
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+2
+Enter an element to insert:21
+ Insert successfully
+[41]<[13 21 22 39],[53 97]>
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+2
+Enter an element to insert:40
+ Insert successfully
+[22 41]<[13 21],[39 40],[53 97]>
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+2
+Enter an element to insert:30
+ Insert successfully
+[22 41]<[13 21],[30 39 40],[53 97]>
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+2
+Enter an element to insert:27
+ Insert successfully
+[22 41]<[13 21],[27 30 39 40],[53 97]>
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+2
+Enter an element to insert:33
+ Insert successfully
+[22 33 41]<[13 21],[27 30],[39 40],[53 97]>
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+2
+Enter an element to insert:36
+ Insert successfully
+[22 33 41]<[13 21],[27 30],[36 39 40],[53 97]>
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+2
+Enter an element to insert:35
+ Insert successfully
+[22 33 41]<[13 21],[27 30],[35 36 39 40],[53 97]>
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+2
+Enter an element to insert:34
+ Insert successfully
+[22 33 36 41]<[13 21],[27 30],[34 35],[39 40],[53 97]>
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+2 
+Enter an element to insert:24
+ Insert successfully
+[22 33 36 41]<[13 21],[24 27 30],[34 35],[39 40],[53 97]>
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+2
+Enter an element to insert:29
+ Insert successfully
+[22 33 36 41]<[13 21],[24 27 29 30],[34 35],[39 40],[53 97]>
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+2
+Enter an element to insert:26
+ Insert successfully
+[33]<[22 27]<[13 21],[24 26],[29 30]>,[36 41]<[34 35],[39 40],[53 97]>>
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+2
+Enter an element to insert:17
+ Insert successfully
+[33]<[22 27]<[13 17 21],[24 26],[29 30]>,[36 41]<[34 35],[39 40],[53 97]>>
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+2
+Enter an element to insert:28
+ Insert successfully
+[33]<[22 27]<[13 17 21],[24 26],[28 29 30]>,[36 41]<[34 35],[39 40],[53 97]>>
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+2
+Enter an element to insert:29
+ The element is already in B-Tree
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+2
+Enter an element to insert:31
+ Insert successfully
+[33]<[22 27]<[13 17 21],[24 26],[28 29 30 31]>,[36 41]<[34 35],[39 40],[53 97]>>
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+22
+Enter an element to insert:32
+ Insert successfully
+[33]<[22 27 30]<[13 17 21],[24 26],[28 29],[31 32]>,[36 41]<[34 35],[39 40],[53 97]>>
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+2
+Enter an element to insert:23
+ Insert successfully
+[33]<[22 27 30]<[13 17 21],[23 24 26],[28 29],[31 32]>,[36 41]<[34 35],[39 40],[53 97]>>
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+4
+Enter an element to be deleted:
+21
+Delete successfully
+[33]<[22 27 30]<[13 17],[23 24 26],[28 29],[31 32]>,[36 41]<[34 35],[39 40],[53 97]>>
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+4
+Enter an element to be deleted:
+27
+Delete successfully
+[33]<[22 26 30]<[13 17],[23 24],[28 29],[31 32]>,[36 41]<[34 35],[39 40],[53 97]>>
+********** Operation Menu **********
+1: Create a 3-B-Tree
+2: Insert an element
+3: Find an element
+4: Delete an element
+5: Print B-Tree
+6: Exit
+7: Continue execution
+********** Operation Menu **********
+4
+Enter an element to be deleted:
+32  // error!
+
+Process finished with exit code 3
+
+*****/
