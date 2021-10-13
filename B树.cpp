@@ -11,7 +11,7 @@ using namespace std;
 // data type in b_tree
 typedef int key_type;
 // b_tree's degree, (2-3 tree)
-const int m = 3;
+const int m = 5;
 
 // b_tree node
 typedef struct BTNode {
@@ -657,7 +657,7 @@ Enter an element to insert:53
 6: Exit
 7: Continue execution
 ********** Operation Menu **********
-2 
+2
 Enter an element to insert:13
  Insert successfully
 [41]<[13 22 39],[53 97]>
@@ -774,7 +774,7 @@ Enter an element to insert:34
 6: Exit
 7: Continue execution
 ********** Operation Menu **********
-2 
+2
 Enter an element to insert:24
  Insert successfully
 [22 33 36 41]<[13 21],[24 27 30],[34 35],[39 40],[53 97]>
