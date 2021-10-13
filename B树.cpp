@@ -254,7 +254,7 @@ void Restore(BTree& p, int i, BTree& T) {
         }
         // borrow one key from left node
         if (r > 0 && lc != nullptr && (lc -> keynum > (m-1)/2)) {
-            p -> keynum = p -> keynum + 1;
+            p -> keynum += 1;
             for (j = p -> keynum; j > 1; j -= 1) {
                 p -> key[j] = p -> key[j-1];
                 p -> ptr[j] = p -> ptr[j-1];
@@ -266,13 +266,13 @@ void Restore(BTree& p, int i, BTree& T) {
                 p -> ptr[0] -> parent = p;
             }
             ap -> key[r] = lc -> key[lc -> keynum];
-            lc -> keynum = lc -> keynum - 1;
+            lc -> keynum -= 1;
             finished = 1;
             break;
         }
         // borrow one key from right node
         else if (ap -> keynum > r && rc != nullptr && (rc -> keynum > (m-1)/2)) {
-            p -> keynum = p -> keynum + 1;
+            p -> keynum += 1;
             p -> key[p -> keynum] = ap -> key[r];
             p -> ptr[p -> keynum] = rc -> ptr[0];
             if (p -> ptr[p -> keynum] != nullptr) {
@@ -284,7 +284,7 @@ void Restore(BTree& p, int i, BTree& T) {
                 rc -> key[j] = rc -> key[j+1];
                 rc -> ptr[j] = rc -> ptr[j+1];
             }
-            rc -> keynum = rc -> keynum - 1;
+            rc -> keynum -= 1;
             finished = 1;
             break;
         }
@@ -295,7 +295,7 @@ void Restore(BTree& p, int i, BTree& T) {
         // combine with left brother
         if (r > 0 && (ap -> ptr[r-1] -> keynum <= (m-1)/2)) {
             lc = ap -> ptr[r-1];
-            p -> keynum = p -> keynum + 1;
+            p -> keynum += 1;
             for (j = p -> keynum; j > 1; j -= 1) {
                 p -> key[j] = p -> key[j-1];
                 p -> ptr[j] = p -> ptr[j-1];
@@ -319,7 +319,8 @@ void Restore(BTree& p, int i, BTree& T) {
                 ap -> key[j] = ap -> key[j+1];
                 ap -> ptr[j] = ap -> ptr[j+1];
             }
-            ap -> keynum = ap -> keynum - 1;
+            ap -> keynum -= 1;
+            pr = p;
             delete pr;
             pr = nullptr;
             p = lc;
@@ -330,7 +331,7 @@ void Restore(BTree& p, int i, BTree& T) {
             if (r == 0) {
                 r += 1;
             }
-            p -> keynum = p -> keynum + 1;
+            p -> keynum += 1;
             p -> key[p -> keynum] = ap -> key[r];
             p -> ptr[p -> keynum]  = rc -> ptr[0];
             rc -> keynum = p -> keynum + rc -> keynum;
@@ -355,7 +356,8 @@ void Restore(BTree& p, int i, BTree& T) {
                 ap -> key[j] = ap -> key[j+1];
                 ap -> ptr[j] = ap -> ptr[j+1];
             }
-            ap -> keynum = ap -> keynum - 1;
+            ap -> keynum -= 1;
+            pr = p;
             delete pr;
             pr = nullptr;
             p = lc;
@@ -365,6 +367,7 @@ void Restore(BTree& p, int i, BTree& T) {
             finished = 1;
         }
         else if (ap == nullptr) {
+            pr = p;
             T = p;
             free(pr);
             pr = nullptr;
