@@ -10,7 +10,7 @@ using namespace std;
 
 // data type in b_tree
 typedef int key_type;
-// b_tree's degree, (2-3 tree)
+// b_tree's degree
 const int m = 5;
 
 // b_tree node
@@ -292,6 +292,7 @@ void Restore(BTree& p, int i, BTree& T) {
         while (ap -> ptr[r] != p) {
             r += 1;
         }
+        // brother cannot satisfy, then borrow from father
         // combine with left brother
         if (r > 0 && (ap -> ptr[r-1] -> keynum <= (m-1)/2)) {
             lc = ap -> ptr[r-1];
@@ -421,34 +422,34 @@ void DeleteBTree(BTree& p, int i, BTree& T) {
  * @param p BTree
  */
 void show_btree(BTree& p) {
-   if (p == nullptr) {
-       cout << "B-Tree is nullptr" << endl;
-       return;
-   }
-   bool have_child = false;
-   cout << "[";
-   for (int i = 1; i <= p -> keynum; i += 1) {
-       if (i != 1) {
-           cout << " ";
-       }
-       cout << p -> key[i];
-   }
-   cout << "]";
-   for (int i = 0; i <= p -> keynum; i += 1) {
-       if (p -> ptr[i] != nullptr) {
-           if (i == 0) {
-               cout << "<";
-           }
-           else {
-               cout << ",";
-           }
-           show_btree(p -> ptr[i]);
-           have_child = true;
-       }
-   }
-   if (have_child) {
-       cout << ">";
-   }
+    if (p == nullptr) {
+        cout << "B-Tree is nullptr" << endl;
+        return;
+    }
+    bool have_child = false;
+    cout << "[";
+    for (int i = 1; i <= p -> keynum; i += 1) {
+        if (i != 1) {
+            cout << " ";
+        }
+        cout << p -> key[i];
+    }
+    cout << "]";
+    for (int i = 0; i <= p -> keynum; i += 1) {
+        if (p -> ptr[i] != nullptr) {
+            if (i == 0) {
+                cout << "<";
+            }
+            else {
+                cout << ",";
+            }
+            show_btree(p -> ptr[i]);
+            have_child = true;
+        }
+    }
+    if (have_child) {
+        cout << ">";
+    }
 }
 
 
@@ -459,7 +460,7 @@ void show_btree(BTree& p) {
 void Destory(BTree& t) {
     int i = 0;
     if (t != nullptr) {
-        while (i < t -> keynum) {
+        while (i <= t -> keynum) {
             Destory(t -> ptr[i]);
             delete t -> ptr[i];
             i += 1;
@@ -532,8 +533,7 @@ void delete_key_type() {
 }
 
 
-int main()
-{
+int main() {
     int order = 1;
     while (order) {
         cout << "********** Operation Menu **********" << endl;
@@ -552,24 +552,24 @@ int main()
                 Destory(T);
                 create_btree();
                 break;
-            // Insert an element
+                // Insert an element
             case 2:
                 insert_key_type();
                 break;
-            // Find an element
+                // Find an element
             case 3:
                 find_key_type();
                 break;
-            // Delete an element
+                // Delete an element
             case 4:
                 delete_key_type();
                 break;
-            // Print B-Tree
+                // Print B-Tree
             case 5:
                 show_btree(T);
                 cout << endl;
                 break;
-            // Exit
+                // Exit
             case 6:
                 cout << "Good Bye!" << endl;
                 return 0;
@@ -577,6 +577,5 @@ int main()
                 cout << "Invalid input, try again!" << endl;
         }
     }
-
     return 0;
 }
