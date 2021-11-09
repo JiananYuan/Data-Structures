@@ -36,7 +36,6 @@ public class Merkle {
         // 到merkle 的根节点停止hash 计算
         while (left != 1) {
             for (int i = left; i <= right; i += 2) {
-                // todo: 拼接在一起哈希?
                 merkleTree[i / 2] = encrypt(merkleTree[i] + merkleTree[i + 1]);
             }
             left >>= 1;
